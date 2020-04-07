@@ -34,7 +34,7 @@ equation = StringVar()
  
 calculation = Label(root,textvariable = equation,foreground="#2A2A2A",font=("Bahnschrift", 24), width=21,height=2,bg='white')
 #calculation.place(x=0, y=0, relwidth=1, relheight=1)
-equation.set("Start calculating...")
+equation.set("Начинаю подсчёт...")
 calculation.grid(row=1, columnspan=8,pady=15)
 global num
 
@@ -68,6 +68,7 @@ def Voice():
     engineio = pyttsx3.init()
     voices = engineio.getProperty('voices')
     engineio.setProperty('rate', 130)
+    engineio.setProperty('voice', 'ru')
     engineio.setProperty('voice', voices[0].id)
     def speak(text):
         engineio.say(text)
@@ -85,8 +86,8 @@ def Voice():
     while 1:
         
         with mic as source:
-            print('Listening...')
-            text = 'Listening...'
+            print('Слушаю...')
+            text = 'Слушаю...'
             speak(text)
 
             audio = r.listen(source)
@@ -94,20 +95,20 @@ def Voice():
             r.dynamic_energy_threshold = True        # listen to the source
             try:
                 # use recognizer to convert our audio into text part.
-                text = r.recognize_google(audio)
-                print("You said : {}".format(text))
+                text = r.recognize_google(audio,language="ru_RU")
+                print("Вы сказали : {}".format(text))
             except:
                 # In case of voice not recognized  clearly
-                print("Sorry could not recognize your voice")
-                speak("Could not understand")
+                print("Извините,не могу опознать голос")
+                speak("Не могу опознать вашу команду")
 
-        if text == 'exit':
-            equation.set('Good Bye :D')
+        if text == 'выход' or text=='выйти' or text=='закрыть' or text=='остановить' or text=='выйти':
+            equation.set('До встречи :D')
             root.update_idletasks()
-            speak("Good Bye , Have a nice day !")
-            break
-            #sys.exit("Thankyou !")
-        elif text == "clear":
+            speak("До Свидания , Хорошего дня !")
+        #elif text =='закрыть' or text=='Закрой'or text=='закончить': doesn't work correctly
+           # sys.exit("До Свидания , Хорошего дня !")
+        elif text == "Очисти" or text=='сотри' or text=='стереть':
             equation.set(" ")
         
             
@@ -137,42 +138,42 @@ def Voice():
        
     
         ans=0
-        if ch == '+':
+        if ch == '+' or ch=='плюс' or ch=='добавить' or ch=='прибавить':
             ans = a+b
             equation.set(ans)
             root.update_idletasks()
         
             
-        elif ch == '-':
+        elif ch == '-' or ch=='минус' or ch=='отнять' or ch=='вычесть':
             ans = a-b
             equation.set(ans)
             root.update_idletasks()
         
-        elif ch == 'x' or ch == 'X':
+        elif ch == 'x' or ch == 'умножить' or ch=='на' or ch=='ножить':
             ans = a*b
             equation.set(round(ans,2))
             root.update_idletasks()
             
-        elif ch == '/' or ch=='d':
+        elif ch == '/' or ch=='поделить' or ch=='разделить' or ch=='делить':
             if b!=0:
                 ans = a/b
                 equation.set(round(ans,2))
                 root.update_idletasks()
             else:
-                speak("Not defined")
+                speak("Не определено")
                 ans=0
                 #equation.set(round(ans,2))
                 root.update_idletasks()
-        elif ch == '^':
+        elif ch == '^' or ch=='в' or ch=='во' or ch=='степень' or ch=='степени' or ch=='епень':
             ans= math.pow(a,b)
             equation.set(ans)
             root.update_idletasks()
         else:
-            ans = "Invalid Command"
+            ans = "Некорректная команда"
 
         print(round(ans,2)) 
         equation.set(ans)
-        speak("The answer is {}".format(round(ans,2)))
+        speak("Ответ: {}".format(round(ans,2)))
         #root.update_idletasks()
        
 
