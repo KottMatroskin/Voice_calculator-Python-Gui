@@ -1,3 +1,4 @@
+
 import tkinter as tk
 import tkinter.messagebox
 from tkinter import *
@@ -103,9 +104,9 @@ def Voice():
                 speak("Не могу опознать вашу команду")
 
         if text == 'выход' or text=='выйти' or text=='закрыть' or text=='остановить' or text=='выйти':
-            equation.set('До встречи :D')
+            equation.set('Начинаю подсчёт... ')
             root.update_idletasks()
-            speak("До Свидания , Хорошего дня !")
+            speak("Вы в режиме обычного калькулятора!")
         #elif text =='закрыть' or text=='Закрой'or text=='закончить': doesn't work correctly
            # sys.exit("До Свидания , Хорошего дня !")
         elif text == "Очисти" or text=='сотри' or text=='стереть':
